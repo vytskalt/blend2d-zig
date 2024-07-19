@@ -1,0 +1,20 @@
+.{
+    .name = "blend2d",
+    .version = "2024.7.14",
+    .dependencies = .{
+        .blend2d = .{
+            .url = "https://github.com/blend2d/blend2d/archive/a1235f3b7a9b4656f5fadd7ab973b83537ca6c74.tar.gz",
+            .hash = "1220cacb91ed92061bcc8937cc5cf34fbc2d0006956ff049ce5b5b34e835359065fd",
+        },
+        .asmjit = .{
+            .url = "https://github.com/asmjit/asmjit/archive/330aa64386f394e090eb1062c645f9d021a761bc.tar.gz",
+            .hash = "1220388abe1bd6c55aaff4915363033a442136d9e6763c7c0c4cfdc8c14e0be88258",
+        },
+    },
+    .paths = .{
+        "LICENSE",
+        "README.md",
+        "build.zig",
+        "build.zig.zon",
+    },
+}

@@ -66,10 +66,6 @@ pub fn build(b: *std.Build) void {
         }
     }
 
-    if (target.result.os.tag == .wasi) {
-        flags.appendSlice(&.{ "-D_WASI_EMULATED_MMAN", "-lwasi-emulated-mman" }) catch @panic("OOM");
-    }
-
     switch (target.result.cpu.arch) {
         .x86, .x86_64, .aarch64 => {
             flags.append("-DASMJIT_STATIC") catch @panic("OOM");
@@ -314,25 +310,4 @@ pub fn build(b: *std.Build) void {
     lib.installHeadersDirectory(upstream_blend2d.path("src"), "", .{});
 
     b.installArtifact(lib);
-
-    // ---
-
-    const exe = b.addExecutable(.{
-        .name = "renderer",
-        .root_source_file = b.path("src/main.zig"),
-        .target = target,
-        .optimize = optimize,
-    });
-    exe.linkLibrary(lib);
-
-    b.installArtifact(exe);
-    const run_cmd = b.addRunArtifact(exe);
-    run_cmd.step.dependOn(b.getInstallStep());
-
-    if (b.args) |args| {
-        run_cmd.addArgs(args);
-    }
-
-    const run_step = b.step("run", "Run the app");
-    run_step.dependOn(&run_cmd.step);
 }
